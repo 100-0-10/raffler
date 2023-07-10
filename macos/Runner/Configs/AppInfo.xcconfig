@@ -8,7 +8,7 @@
 PRODUCT_NAME = raffler
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.raffler.raffler
+PRODUCT_BUNDLE_IDENTIFIER = com.jidudu.raffler
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 com.raffler. All rights reserved.

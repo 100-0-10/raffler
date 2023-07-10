@@ -1,4 +1,4 @@
-package com.raffler.raffler
+package com.jidudu.raffler
 
 import io.flutter.embedding.android.FlutterActivity
 
