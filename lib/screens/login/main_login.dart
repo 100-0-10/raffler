@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:raffler/main_view_model.dart';
+import 'package:raffler/screens/login/kakao_login.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({Key ? key}) : super(key: key);
 
-  Future<dynamic> fn_loginWithKakaoAccount() async{
-    try {
-      OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
-      print("token : "+token.toString());
-      return token;
-    } catch (e) {
-      print("로그인 실패 "+e.toString());
-
-      return null;
-    }
-  }
+  final viewModel = MainViewModel(KakaoLogin());
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +16,17 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Container(
+                width: 200,
+                height: 200,
+                child: Image.network(viewModel.user?.kakaoAccount?.profile?.profileImageUrl ?? ''),
+              ),
+              Text(
+                '${viewModel.isLogined}',
+              ),
+              Text(
+                viewModel.user?.kakaoAccount?.profile?.nickname ?? '',
+              ),
               const Icon(
                 Icons.bakery_dining_outlined,
                 size: 100,
@@ -39,14 +41,20 @@ class LoginScreen extends StatelessWidget {
                 ),
                 child: const Text('카카오 로그인',textAlign: TextAlign.center,),
                 onPressed: () async {
-                  try {
-                    AccessTokenInfo tokenInfo = await UserApi.instance.accessTokenInfo();
-                    print('이미 액세스 토큰이 존재하므로 로그인을 시도하지 않습니다.');
-                  } catch (e) {
-                    OAuthToken token = await fn_loginWithKakaoAccount();
-                    User user = await UserApi.instance.me();
-
-                  }
+                  await viewModel.login();
+                  setState(){};
+                },
+              ),
+              OutlinedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
+                  fixedSize: const Size(200, 40),
+                ),
+                child: const Text('로그아웃'),
+                onPressed: () async {
+                  await viewModel.logout();
+                  setState(){};
                 },
               ),
               const SizedBox(height: 5,),
