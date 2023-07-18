@@ -74,7 +74,7 @@ class LoginPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () async {
-                Navigator.push(context, createRoute(PhoneAuthPage(), kLeftPageAnimation));
+                Navigator.push(context, createRoute(HomePage(), kLeftPageAnimation));
               },
               child: Container(
                 width: 200,
